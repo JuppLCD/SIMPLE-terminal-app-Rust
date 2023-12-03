@@ -2,7 +2,7 @@ use std::io;
 
 pub fn obtener_opcion_valida(primera_opcion: u8, ultima_opcion: u8) -> u8 {
     return loop {
-        println!("Opcion ({primera_opcion}-{ultima_opcion}): ");
+        println!("Opcion [{primera_opcion}-{ultima_opcion}]: ");
 
         let mut op_usuario = String::new();
 
@@ -17,5 +17,6 @@ pub fn obtener_opcion_valida(primera_opcion: u8, ultima_opcion: u8) -> u8 {
         };
 
         println!("Opcion no valida!!");
+        println!("Selecione dentro del rango dado\n");
     };
 }
