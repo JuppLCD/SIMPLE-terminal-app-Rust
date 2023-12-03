@@ -9,12 +9,11 @@ pub mod opciones_agenda_contacto;
 use crate::utilidades::input::obtener_opcion_valida;
 pub mod utilidades;
 
-use crate::imprimir::imprimir_opciones_agenda;
+use crate::imprimir::{imprimir_msg_salir_agenda, imprimir_opciones_agenda};
 pub mod imprimir;
 
 fn main() {
     loop {
-        // std::process::Command::new("clear").status().unwrap();
         imprimir_opciones_agenda();
 
         let op = obtener_opcion_valida(0, 5);
@@ -29,5 +28,5 @@ fn main() {
         }
     }
 
-    println!("Opcion Salir")
+    imprimir_msg_salir_agenda()
 }

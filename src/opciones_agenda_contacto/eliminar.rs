@@ -1,6 +1,7 @@
+use crate::imprimir::imprimir_cabecera_eliminar_contacto;
 use crate::utilidades::terminal::pausar_terminal;
 
 pub fn eliminar_contacto() {
-    println!("Opcion Eliminar");
+    imprimir_cabecera_eliminar_contacto();
     pausar_terminal();
 }

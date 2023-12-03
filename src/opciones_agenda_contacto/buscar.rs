@@ -1,6 +1,7 @@
+use crate::imprimir::imprimir_cabecera_buscar_contacto;
 use crate::utilidades::terminal::pausar_terminal;
 
 pub fn buscar_contacto() {
-    println!("Opcion Buscar");
+    imprimir_cabecera_buscar_contacto();
     pausar_terminal();
 }
