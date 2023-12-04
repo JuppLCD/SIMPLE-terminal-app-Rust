@@ -52,42 +52,40 @@ pub fn contacto_filtrar_por_propiedad(
 ) -> Vec<Contacto> {
     contactos
         .iter()
-        .filter_map(|contacto| {
-            match propiedad {
-                ContactoPropiedad::Nombre
-                    if contacto
-                        .nombre
-                        .to_lowercase()
-                        .contains(valor.to_lowercase().as_str()) =>
-                {
-                    Some(contacto.clone())
-                }
-                ContactoPropiedad::Apellido
-                    if contacto
-                        .apellido
-                        .to_lowercase()
-                        .contains(valor.to_lowercase().as_str()) =>
-                {
-                    Some(contacto.clone())
-                }
-                ContactoPropiedad::Telefono
-                    if contacto
-                        .telefono
-                        .to_lowercase()
-                        .contains(valor.to_lowercase().as_str()) =>
-                {
-                    Some(contacto.clone())
-                }
-                ContactoPropiedad::Email
-                    if contacto
-                        .email
-                        .to_lowercase()
-                        .contains(valor.to_lowercase().as_str()) =>
-                {
-                    Some(contacto.clone())
-                }
-                _ => None, // Manejar otros casos aquí si es necesario
+        .filter_map(|contacto| match propiedad {
+            ContactoPropiedad::Nombre
+                if contacto
+                    .nombre
+                    .to_lowercase()
+                    .contains(valor.to_lowercase().as_str()) =>
+            {
+                Some(contacto.clone())
             }
+            ContactoPropiedad::Apellido
+                if contacto
+                    .apellido
+                    .to_lowercase()
+                    .contains(valor.to_lowercase().as_str()) =>
+            {
+                Some(contacto.clone())
+            }
+            ContactoPropiedad::Telefono
+                if contacto
+                    .telefono
+                    .to_lowercase()
+                    .contains(valor.to_lowercase().as_str()) =>
+            {
+                Some(contacto.clone())
+            }
+            ContactoPropiedad::Email
+                if contacto
+                    .email
+                    .to_lowercase()
+                    .contains(valor.to_lowercase().as_str()) =>
+            {
+                Some(contacto.clone())
+            }
+            _ => None,
         })
         .collect()
 }

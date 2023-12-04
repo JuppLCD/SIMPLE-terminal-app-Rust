@@ -38,7 +38,7 @@ fn main() {
 
         match AgendaContactosOpciones::new(op) {
             AgendaContactosOpciones::MostrarTodos => mostrar_todos_contactos(&contactos),
-            AgendaContactosOpciones::Buscar => buscar_contacto(),
+            AgendaContactosOpciones::Buscar => buscar_contacto(&contactos),
             AgendaContactosOpciones::Agregar => agregar_contacto(),
             AgendaContactosOpciones::Editar => editar_contacto(),
             AgendaContactosOpciones::Eliminar => eliminar_contacto(),
