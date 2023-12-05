@@ -34,6 +34,20 @@ impl Contacto {
         println!("Tel.: {}", self.telefono);
         println!("Email: {}", self.email);
     }
+
+    pub fn es_igual(&self, otro: &Self) -> bool {
+        self.apellido == otro.apellido
+            && self.nombre == otro.nombre
+            && self.telefono == otro.telefono
+            && self.email == otro.email
+    }
+
+    pub fn editar(&mut self, nombre: String, apellido: String, telefono: String, email: String) {
+        self.nombre = nombre;
+        self.apellido = apellido;
+        self.telefono = telefono;
+        self.email = email;
+    }
 }
 
 pub fn contacto_imprimir_vector(contactos: &Vec<Contacto>) {
