@@ -29,7 +29,7 @@ fn main() {
         "65436".to_string(),
         "pepe@gmail.com".to_string(),
     );
-    let contactos = vec![contacto1, contacto2];
+    let mut contactos = vec![contacto1, contacto2];
 
     loop {
         imprimir_opciones_agenda();
@@ -39,7 +39,7 @@ fn main() {
         match AgendaContactosOpciones::new(op) {
             AgendaContactosOpciones::MostrarTodos => mostrar_todos_contactos(&contactos),
             AgendaContactosOpciones::Buscar => buscar_contacto(&contactos),
-            AgendaContactosOpciones::Agregar => agregar_contacto(),
+            AgendaContactosOpciones::Agregar => agregar_contacto(&mut contactos),
             AgendaContactosOpciones::Editar => editar_contacto(),
             AgendaContactosOpciones::Eliminar => eliminar_contacto(),
             AgendaContactosOpciones::Salir => break,
