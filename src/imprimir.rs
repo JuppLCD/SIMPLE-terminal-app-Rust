@@ -51,7 +51,7 @@ pub fn imprimir_cabecera_alamcenar_contacto() {
 pub fn imprimir_opciones_alamcenar_contacto() {
     println!("\nDesea: ");
     println!("1) Almacenar.");
-    println!("2) Reacer.");
+    println!("2) Rehacer.");
     println!("3) Almacenar y crear nuevo contacto.");
 
     println!("0) Descartar contacto e ir al menu.");
