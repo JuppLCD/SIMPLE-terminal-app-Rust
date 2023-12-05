@@ -41,7 +41,7 @@ fn main() {
             AgendaContactosOpciones::Buscar => buscar_contacto(&contactos),
             AgendaContactosOpciones::Agregar => agregar_contacto(&mut contactos),
             AgendaContactosOpciones::Editar => editar_contacto(&mut contactos),
-            AgendaContactosOpciones::Eliminar => eliminar_contacto(),
+            AgendaContactosOpciones::Eliminar => eliminar_contacto(&mut contactos),
             AgendaContactosOpciones::Salir => break,
         }
     }
