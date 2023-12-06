@@ -50,6 +50,17 @@ impl Contacto {
     }
 }
 
+impl ContactoPropiedad {
+    pub fn nuevo(opcion: u8) -> ContactoPropiedad {
+        match opcion {
+            1 => ContactoPropiedad::Nombre,
+            2 => ContactoPropiedad::Apellido,
+            3 => ContactoPropiedad::Telefono,
+            _ => ContactoPropiedad::Email,
+        }
+    }
+}
+
 pub fn contacto_imprimir_vector(contactos: &Vec<Contacto>) {
     for (i, cont) in contactos.iter().enumerate() {
         println!("\nContacto N°{}", i + 1);

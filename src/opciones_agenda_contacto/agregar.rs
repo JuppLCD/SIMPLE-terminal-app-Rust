@@ -22,14 +22,32 @@ pub fn agregar_contacto(contactos: &mut Vec<Contacto>) {
         imprimir_opciones_alamcenar_contacto();
         let op = obtener_opcion_valida(0, 3);
 
-        match op {
-            1 => {
+        match OpcionesAgregarContacto::nuevo(op) {
+            OpcionesAgregarContacto::AlmacenarYSalir => {
                 contactos.push(nuevo_contacto);
                 return;
-            } // Almacenar y salir
-            2 => continue,                       // Rehacer
-            3 => contactos.push(nuevo_contacto), // Almacenar y continuar
-            _ => return,                         // Salir
+            }
+            OpcionesAgregarContacto::Rehacer => continue,
+            OpcionesAgregarContacto::AlmacenarYContinuar => contactos.push(nuevo_contacto),
+            OpcionesAgregarContacto::Salir => return,
+        }
+    }
+}
+
+pub enum OpcionesAgregarContacto {
+    AlmacenarYSalir,
+    Rehacer,
+    AlmacenarYContinuar,
+    Salir,
+}
+
+impl OpcionesAgregarContacto {
+    pub fn nuevo(opcion: u8) -> OpcionesAgregarContacto {
+        match opcion {
+            1 => OpcionesAgregarContacto::AlmacenarYSalir,
+            2 => OpcionesAgregarContacto::Rehacer,
+            3 => OpcionesAgregarContacto::AlmacenarYContinuar,
+            _ => OpcionesAgregarContacto::Salir,
         }
     }
 }

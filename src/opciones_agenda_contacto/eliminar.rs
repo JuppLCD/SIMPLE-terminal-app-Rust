@@ -12,14 +12,11 @@ pub fn eliminar_contacto(contactos: &mut Vec<Contacto>) {
         imprimir_cabecera_eliminar_contacto();
         let op = obtener_opcion_valida(0, 4);
 
-        let propiedad_buscar: ContactoPropiedad;
-        match op {
-            1 => propiedad_buscar = ContactoPropiedad::Nombre,
-            2 => propiedad_buscar = ContactoPropiedad::Apellido,
-            3 => propiedad_buscar = ContactoPropiedad::Telefono,
-            4 => propiedad_buscar = ContactoPropiedad::Email,
-            _ => return, // Volver a menu principal,
+        if 0 == op {
+            return; // Volver a menu principal
         }
+
+        let propiedad_buscar = ContactoPropiedad::nuevo(op);
 
         let valor_buscar = obtener_texto(format!(
             "\nIngrese el '{:?}' del contacto a eliminar: ",
