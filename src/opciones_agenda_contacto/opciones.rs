@@ -8,7 +8,7 @@ pub enum AgendaContactosOpciones {
 }
 
 impl AgendaContactosOpciones {
-    pub fn new(opcion: u8) -> AgendaContactosOpciones {
+    pub fn nuevo(opcion: u8) -> AgendaContactosOpciones {
         match opcion {
             1 => AgendaContactosOpciones::MostrarTodos,
             2 => AgendaContactosOpciones::Buscar,

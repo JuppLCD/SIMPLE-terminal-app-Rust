@@ -36,7 +36,7 @@ fn main() {
 
         let op = obtener_opcion_valida(0, 5);
 
-        match AgendaContactosOpciones::new(op) {
+        match AgendaContactosOpciones::nuevo(op) {
             AgendaContactosOpciones::MostrarTodos => mostrar_todos_contactos(&contactos),
             AgendaContactosOpciones::Buscar => buscar_contacto(&contactos),
             AgendaContactosOpciones::Agregar => agregar_contacto(&mut contactos),
