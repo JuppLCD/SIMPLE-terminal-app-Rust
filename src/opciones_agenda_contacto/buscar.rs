@@ -7,7 +7,7 @@ use crate::utilidades::input::{obtener_opcion_valida, obtener_texto};
 use crate::utilidades::terminal::pausar_terminal;
 
 pub fn buscar_contacto(contactos: &Vec<Contacto>) {
-    if contactos.len() == 0 {
+    if contactos.is_empty() {
         println!("No se a registrado ningun contacto en la agenda.");
     } else {
         imprimir_cabecera_buscar_contacto();
@@ -27,7 +27,7 @@ pub fn buscar_contacto(contactos: &Vec<Contacto>) {
         let contactos_filtrados =
             contacto_filtrar_por_propiedad(contactos, propiedad_buscar, valor_buscar);
 
-        if contactos_filtrados.len() == 0 {
+        if contactos_filtrados.is_empty() {
             println!("\n\nNo se ha encontrado nigun contacto con dicho valor.\n");
         } else {
             println!("\n\nSe a encontrado los siguientes contactos:");

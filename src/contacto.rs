@@ -61,7 +61,7 @@ impl ContactoPropiedad {
     }
 }
 
-pub fn contacto_imprimir_vector(contactos: &Vec<Contacto>) {
+pub fn contacto_imprimir_vector(contactos: &[Contacto]) {
     for (i, cont) in contactos.iter().enumerate() {
         println!("\nContacto N°{}", i + 1);
         println!("-------------------------------");
@@ -71,7 +71,7 @@ pub fn contacto_imprimir_vector(contactos: &Vec<Contacto>) {
 }
 
 pub fn contacto_filtrar_por_propiedad(
-    contactos: &Vec<Contacto>,
+    contactos: &[Contacto],
     propiedad: ContactoPropiedad,
     valor: String,
 ) -> Vec<Contacto> {
