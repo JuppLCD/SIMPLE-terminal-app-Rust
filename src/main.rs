@@ -1,10 +1,5 @@
-use crate::opciones_agenda_contacto::opciones::AgendaContactosOpciones;
-use crate::opciones_agenda_contacto::{
-    agregar::agregar_contacto, buscar::buscar_contacto, editar::editar_contacto,
-    eliminar::eliminar_contacto, mostrar_todos::mostrar_todos_contactos,
-};
-
-pub mod opciones_agenda_contacto;
+use agenda_contacto::{AgendaContacto, AgendaContactosOpciones};
+mod agenda_contacto;
 
 use crate::utilidades::input::obtener_opcion_valida;
 pub mod utilidades;
@@ -29,7 +24,10 @@ fn main() {
         "65436".to_string(),
         "pepe@gmail.com".to_string(),
     );
-    let mut contactos = vec![contacto1, contacto2];
+
+    let mut agenda = AgendaContacto {
+        contactos: vec![contacto1, contacto2],
+    };
 
     loop {
         imprimir_opciones_agenda();
@@ -37,11 +35,11 @@ fn main() {
         let op = obtener_opcion_valida(0, 5);
 
         match AgendaContactosOpciones::nuevo(op) {
-            AgendaContactosOpciones::MostrarTodos => mostrar_todos_contactos(&contactos),
-            AgendaContactosOpciones::Buscar => buscar_contacto(&contactos),
-            AgendaContactosOpciones::Agregar => agregar_contacto(&mut contactos),
-            AgendaContactosOpciones::Editar => editar_contacto(&mut contactos),
-            AgendaContactosOpciones::Eliminar => eliminar_contacto(&mut contactos),
+            AgendaContactosOpciones::MostrarTodos => agenda.mostrar_todos(),
+            AgendaContactosOpciones::Buscar => agenda.buscar(),
+            AgendaContactosOpciones::Agregar => agenda.agregar(),
+            AgendaContactosOpciones::Editar => agenda.editar(),
+            AgendaContactosOpciones::Eliminar => agenda.eliminar(),
             AgendaContactosOpciones::Salir => break,
         }
     }
