@@ -6,11 +6,10 @@ use crate::{
         imprimir_cabecera_alamcenar_contacto, imprimir_cabecera_buscar_contacto,
         imprimir_cabecera_eliminar_contacto, imprimir_cabecera_modificar_contacto,
         imprimir_cabecera_mostrar_todos_contactos, imprimir_opciones_alamcenar_contacto,
-        limpiar_terminal,
     },
     utilidades::{
         input::{obtener_opcion_valida, obtener_texto},
-        terminal::pausar_terminal,
+        terminal::{limpiar_terminal, pausar_terminal},
     },
 };
 

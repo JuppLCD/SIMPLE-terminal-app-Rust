@@ -1,7 +1,4 @@
-pub fn limpiar_terminal() {
-    println!("\n\n\n");
-    // std::process::Command::new("clear").status().unwrap(); // Linea que puede ser comentada o descomentada para debugear
-}
+use crate::utilidades::terminal::limpiar_terminal;
 
 pub fn imprimir_opciones_agenda() {
     limpiar_terminal();
