@@ -7,27 +7,12 @@ pub mod utilidades;
 use crate::imprimir::{imprimir_msg_salir_agenda, imprimir_opciones_agenda};
 pub mod imprimir;
 
-use crate::contacto::Contacto;
 pub mod contacto;
 
-fn main() {
-    // Contactos de prueba
-    let contacto1 = Contacto::nuevo(
-        "Lorenzo".to_string(),
-        "Canovas".to_string(),
-        "846857".to_string(),
-        "lorenzo@gmail.com".to_string(),
-    );
-    let contacto2 = Contacto::nuevo(
-        "Pepe".to_string(),
-        "Gonsalez".to_string(),
-        "65436".to_string(),
-        "pepe@gmail.com".to_string(),
-    );
+pub mod models;
 
-    let mut agenda = AgendaContacto {
-        contactos: vec![contacto1, contacto2],
-    };
+fn main() {
+    let mut agenda = AgendaContacto::iniciar();
 
     loop {
         imprimir_opciones_agenda();

@@ -7,17 +7,26 @@ use crate::{
         imprimir_cabecera_eliminar_contacto, imprimir_cabecera_modificar_contacto,
         imprimir_cabecera_mostrar_todos_contactos, imprimir_opciones_alamcenar_contacto,
     },
+    models::local::contacto::guardar_contactos_como_csv,
     utilidades::{
         input::{obtener_opcion_valida, obtener_texto},
         terminal::{limpiar_terminal, pausar_terminal},
     },
 };
 
+use crate::models::local::contacto::leer_archivo_csv_de_contactos;
+
 pub struct AgendaContacto {
     pub contactos: Vec<Contacto>,
 }
 
 impl AgendaContacto {
+    pub fn iniciar() -> Self {
+        AgendaContacto {
+            contactos: leer_archivo_csv_de_contactos().unwrap(),
+        }
+    }
+
     pub fn mostrar_todos(&self) {
         imprimir_cabecera_mostrar_todos_contactos();
         contacto_imprimir_vector(&self.contactos);
@@ -77,10 +86,14 @@ impl AgendaContacto {
             match OpcionesAgregarContacto::nuevo(op) {
                 OpcionesAgregarContacto::AlmacenarYSalir => {
                     self.contactos.push(nuevo_contacto);
+                    guardar_contactos_como_csv(&self.contactos).unwrap();
                     return;
                 }
                 OpcionesAgregarContacto::Rehacer => continue,
-                OpcionesAgregarContacto::AlmacenarYContinuar => self.contactos.push(nuevo_contacto),
+                OpcionesAgregarContacto::AlmacenarYContinuar => {
+                    self.contactos.push(nuevo_contacto);
+                    guardar_contactos_como_csv(&self.contactos).unwrap();
+                }
                 OpcionesAgregarContacto::Salir => return,
             }
         }
@@ -149,6 +162,7 @@ impl AgendaContacto {
                 }
             }
         }
+        guardar_contactos_como_csv(&self.contactos).unwrap();
 
         pausar_terminal();
     }
@@ -199,12 +213,15 @@ impl AgendaContacto {
                 {
                     limpiar_terminal();
                     self.contactos.remove(index);
+
                     println!("\nEl contacto se elimino con exito!!");
                 } else {
                     println!("\nEl contacto no se pudo eliminar!!");
                 }
             }
         }
+
+        guardar_contactos_como_csv(&self.contactos).unwrap();
         pausar_terminal();
     }
 }
