@@ -2,7 +2,7 @@ use std::io;
 
 pub fn limpiar_terminal() {
     println!("\n\n\n");
-    // std::process::Command::new("clear").status().unwrap(); // Linea que puede ser comentada o descomentada para debugear
+    std::process::Command::new("clear").status().unwrap(); // Linea que puede ser comentada o descomentada para debugear
 }
 
 pub fn pausar_terminal() {
