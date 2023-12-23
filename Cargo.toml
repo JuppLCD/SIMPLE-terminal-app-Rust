@@ -1,6 +1,6 @@
 [package]
 name = "agenda_contactos"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 csv = "1.3.0"
 serde = { version = "1.0.193", features = ["derive"] }
+uuid = { version = "1.6.1", features = ["v4"] }
