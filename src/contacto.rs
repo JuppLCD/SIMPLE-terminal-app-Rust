@@ -6,10 +6,12 @@ pub struct Contacto {
     apellido: String,
     telefono: String,
     email: String,
+    pub id: String,
 }
 
 #[derive(Debug)]
 pub enum ContactoPropiedad {
+    Id,
     Nombre,
     Apellido,
     Telefono,
@@ -18,8 +20,15 @@ pub enum ContactoPropiedad {
 
 // Fn estaticas
 impl Contacto {
-    pub fn nuevo(nombre: String, apellido: String, telefono: String, email: String) -> Self {
+    pub fn nuevo(
+        nombre: String,
+        apellido: String,
+        telefono: String,
+        email: String,
+        id: String,
+    ) -> Self {
         Contacto {
+            id,
             nombre,
             apellido,
             telefono,
@@ -37,13 +46,6 @@ impl Contacto {
         println!("Email: {}", self.email);
     }
 
-    pub fn es_igual(&self, otro: &Self) -> bool {
-        self.apellido == otro.apellido
-            && self.nombre == otro.nombre
-            && self.telefono == otro.telefono
-            && self.email == otro.email
-    }
-
     pub fn editar(&mut self, nombre: String, apellido: String, telefono: String, email: String) {
         self.nombre = nombre;
         self.apellido = apellido;
@@ -58,7 +60,8 @@ impl ContactoPropiedad {
             1 => ContactoPropiedad::Nombre,
             2 => ContactoPropiedad::Apellido,
             3 => ContactoPropiedad::Telefono,
-            _ => ContactoPropiedad::Email,
+            4 => ContactoPropiedad::Email,
+            _ => ContactoPropiedad::Id,
         }
     }
 }
@@ -107,6 +110,14 @@ pub fn contacto_filtrar_por_propiedad(
             ContactoPropiedad::Email
                 if contacto
                     .email
+                    .to_lowercase()
+                    .contains(valor.to_lowercase().as_str()) =>
+            {
+                Some(contacto.clone())
+            }
+            ContactoPropiedad::Id
+                if contacto
+                    .id
                     .to_lowercase()
                     .contains(valor.to_lowercase().as_str()) =>
             {

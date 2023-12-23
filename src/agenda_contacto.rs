@@ -7,14 +7,12 @@ use crate::{
         imprimir_cabecera_eliminar_contacto, imprimir_cabecera_modificar_contacto,
         imprimir_cabecera_mostrar_todos_contactos, imprimir_opciones_alamcenar_contacto,
     },
-    models::local::contacto::guardar_contactos_como_csv,
+    models::local::contacto::ModeloContacto,
     utilidades::{
         input::{obtener_opcion_valida, obtener_texto},
         terminal::{limpiar_terminal, pausar_terminal},
     },
 };
-
-use crate::models::local::contacto::leer_archivo_csv_de_contactos;
 
 pub struct AgendaContacto {
     pub contactos: Vec<Contacto>,
@@ -23,7 +21,7 @@ pub struct AgendaContacto {
 impl AgendaContacto {
     pub fn iniciar() -> Self {
         AgendaContacto {
-            contactos: leer_archivo_csv_de_contactos().unwrap(),
+            contactos: ModeloContacto::get_all(),
         }
     }
 
@@ -51,8 +49,7 @@ impl AgendaContacto {
                 propiedad_buscar
             ));
 
-            let contactos_filtrados =
-                contacto_filtrar_por_propiedad(&self.contactos, propiedad_buscar, valor_buscar);
+            let contactos_filtrados = ModeloContacto::get_by(propiedad_buscar, valor_buscar);
 
             if contactos_filtrados.is_empty() {
                 println!("\n\nNo se ha encontrado nigun contacto con dicho valor.\n");
@@ -74,25 +71,24 @@ impl AgendaContacto {
             let telefono = obtener_texto("- Numero de telefono: ".to_string());
             let email = obtener_texto("- Email: ".to_string());
 
-            let nuevo_contacto = Contacto::nuevo(nombre, apellido, telefono, email);
-
             limpiar_terminal();
             println!("El nuevo contacto queda con los siguientes valores:");
-            nuevo_contacto.imprimir();
+            println!("Nombre: {}", &nombre);
+            println!("Apellido: {}", &apellido);
+            println!("Tel.: {}", &telefono);
+            println!("Email: {}", &email);
 
             imprimir_opciones_alamcenar_contacto();
             let op = obtener_opcion_valida(0, 3);
 
             match OpcionesAgregarContacto::nuevo(op) {
                 OpcionesAgregarContacto::AlmacenarYSalir => {
-                    self.contactos.push(nuevo_contacto);
-                    guardar_contactos_como_csv(&self.contactos).unwrap();
+                    self.contactos = ModeloContacto::store((nombre, apellido, telefono, email));
                     return;
                 }
                 OpcionesAgregarContacto::Rehacer => continue,
                 OpcionesAgregarContacto::AlmacenarYContinuar => {
-                    self.contactos.push(nuevo_contacto);
-                    guardar_contactos_como_csv(&self.contactos).unwrap();
+                    self.contactos = ModeloContacto::store((nombre, apellido, telefono, email));
                 }
                 OpcionesAgregarContacto::Salir => return,
             }
@@ -145,25 +141,20 @@ impl AgendaContacto {
                 let telefono = obtener_texto("- Numero de telefono: ".to_string());
                 let email = obtener_texto("- Email: ".to_string());
 
-                if let Some(cont) = self
-                    .contactos
-                    .iter_mut()
-                    .find(|c| c.es_igual(contacto_a_editar))
-                {
-                    cont.editar(nombre, apellido, telefono, email);
+                let contacto_editado = ModeloContacto::update(
+                    contacto_a_editar.id.clone(),
+                    (nombre, apellido, telefono, email),
+                );
 
-                    limpiar_terminal();
-                    println!("\nEl contacto se modifico con exito!!");
-                    println!("El contacto modificado queda con los siguientes valores:");
-                    cont.imprimir();
-                    println!();
-                } else {
-                    println!("\nEl contacto no se pudo modificar!!");
-                }
+                limpiar_terminal();
+                println!("\nEl contacto se modifico con exito!!");
+                println!("El contacto modificado queda con los siguientes valores:");
+                contacto_editado.imprimir();
+                println!();
+
+                self.contactos = ModeloContacto::get_all();
             }
         }
-        guardar_contactos_como_csv(&self.contactos).unwrap();
-
         pausar_terminal();
     }
 
@@ -199,29 +190,19 @@ impl AgendaContacto {
                     contactos_filtrados.len()
                 );
 
-                // Obtener el indice del contacto a modificar
+                // Obtener el indice del contacto a eliminar
                 let index_contacto_eliminar =
                     obtener_opcion_valida(1, contactos_filtrados.len() as u8);
                 let index_contacto_eliminar = (index_contacto_eliminar - 1) as usize;
 
                 let contacto_a_eliminar = &contactos_filtrados[index_contacto_eliminar];
 
-                if let Some(index) = self
-                    .contactos
-                    .iter()
-                    .position(|c| c.es_igual(contacto_a_eliminar))
-                {
-                    limpiar_terminal();
-                    self.contactos.remove(index);
+                self.contactos = ModeloContacto::delete(contacto_a_eliminar.id.clone());
 
-                    println!("\nEl contacto se elimino con exito!!");
-                } else {
-                    println!("\nEl contacto no se pudo eliminar!!");
-                }
+                limpiar_terminal();
+                println!("\nEl contacto se elimino con exito!!");
             }
         }
-
-        guardar_contactos_como_csv(&self.contactos).unwrap();
         pausar_terminal();
     }
 }
